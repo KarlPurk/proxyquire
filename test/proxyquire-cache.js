@@ -8,14 +8,14 @@ var assert = require('assert');
 describe("Proxyquire", function() {
   describe('load()', function() {
     it('defaults to preserving the cache', function() {
-      var original = require('./samples/foo');
+      var proxyquire = require('..');
+      var original = proxyquire('./samples/foo', {});
       original.state = 'cached';
 
-      var proxyquire = require('..');
       var proxyFoo = proxyquire('./samples/foo', { 'path': { } });
 
-      var foo = require('./samples/foo');
-      assert.equal('cached', foo.state);
+      var foo = proxyquire('./samples/foo', {});
+      assert.equal(foo.state, 'cached');
       assert.equal(foo, original);
     });
   });
